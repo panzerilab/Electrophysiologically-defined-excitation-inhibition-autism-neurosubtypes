@@ -1,0 +1,13 @@
+# Ignore data folders
+DATA/
+Simulation results/
+
+# Ignore large files
+*.mat
+*.npy
+*.h5
+*.csv
+
+# Ignore system/temporary files
+.DS_Store
+

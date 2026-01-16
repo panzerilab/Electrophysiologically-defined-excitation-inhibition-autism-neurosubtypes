@@ -29,8 +29,8 @@ for camk=0:2
 % -------------------------------------------------------------------------
 trials      = 2;
 
-base_path   = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico/Simulations/Simulation results';
-save_dir    = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico/Figures/Supplementaries/Supplementary 3';
+base_path   = '../Simulations/Simulation results';
+save_dir    = '../Figures/Supplementaries/Supplementary 3';
 
 % Create folder if it does not exist
 if ~exist(save_dir, 'dir')

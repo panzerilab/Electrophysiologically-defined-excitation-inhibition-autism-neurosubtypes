@@ -334,8 +334,6 @@ xticklabels({'H','\gamma'});
 box('off')
 ylabel('Coefficient'); set(gca,'FontSize',8)
 
-
-
 save_path = fullfile(save_dir,'/panel_H-I.png');
 saveas(gcf, [save_path]); 
 

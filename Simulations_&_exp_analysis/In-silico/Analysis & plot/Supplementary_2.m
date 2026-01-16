@@ -42,9 +42,9 @@ fprintf('Data loaded');
 % -----------------------------
 
 if LFP_true
-    save_dir = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico/Figures/Figure 1';
+    save_dir = '../Figures/Figure 1';
 else 
-    save_dir = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico/Figures/Figure 1 EEG';
+    save_dir = '../Figures/Figure 1 EEG';
 end
 % Create folder if it does not exist
 if ~exist(save_dir, 'dir')

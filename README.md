@@ -8,7 +8,7 @@ This repository contains all the code required for the analysis and generation o
 
 - **Ephys-Analysis-main**  
   Code for processing and analysis of electrophysiological data can be found at 
-  https://github.com/panzerilab/Ephys-Analyses
+  https://github.com/panzerilab/Ephys-Analyses_pub
 
 - **Simulations_&_aexp_analysis**  
   Contains scripts to run simulations and additional analyses.  

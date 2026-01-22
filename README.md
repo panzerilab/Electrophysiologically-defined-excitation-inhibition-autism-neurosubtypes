@@ -7,8 +7,8 @@ This repository contains all the code required for the analysis and generation o
 ## Folder Overview
 
 - **Ephys-Analysis-main**  
-  Contains the main analysis pipeline for electrophysiological data.  
-  Please refer to its own `README.md` for detailed instructions on usage.
+  Code for processing and analysis of electrophysiological data can be found at 
+  https://github.com/panzerilab/Ephys-Analyses
 
 - **Simulations_&_aexp_analysis**  
   Contains scripts to run simulations and additional analyses.  

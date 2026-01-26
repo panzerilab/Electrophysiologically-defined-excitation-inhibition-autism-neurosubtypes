@@ -27,7 +27,7 @@ clear; close all; clc;
 % ========================================================================
 
 trials = 2;
-root_path  = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico';
+root_path  = '../';
 path_sim   = fullfile(root_path, 'Simulations/Simulation results/g_and_nu/data');
 path_stats = fullfile(root_path, 'Simulations/Simulation results/g_and_nu/metadata/stats_db.csv');
 path_params= fullfile(root_path, 'Simulations/Simulation results/g_and_nu/metadata/parameter_db.csv');

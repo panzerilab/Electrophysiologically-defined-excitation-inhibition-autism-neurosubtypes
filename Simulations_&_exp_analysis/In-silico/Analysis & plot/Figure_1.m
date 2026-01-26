@@ -42,9 +42,9 @@ fprintf('Data loaded\n');
 % Output directory
 % -----------------------------
 if LFP_true
-    save_dir = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico/Figures/Figure_1_LFP';
+    save_dir = '../Figures/Figure_1_LFP';
 else
-    save_dir = '/Users/gabrielemancini/Desktop/Bertelsen Github/In-silico/Figures/Figure_1_EEG';
+    save_dir = '../Figures/Figure_1_EEG';
 end
 if ~exist(save_dir,'dir'), mkdir(save_dir); end
 
@@ -71,11 +71,11 @@ figure('Color','white','Units','centimeters','Position',[0 0 13 4]);
 conditions = {
  @(FR_exc,FR_inh,nu_0,g) (0.8*FR_exc+0.2*FR_inh<10)&(nu_0<1.7),        1,'g','Firing Rate (Hz)','g',true;
  @(FR_exc,FR_inh,nu_0,g) (0.8*FR_exc+0.2*FR_inh<10)&(nu_0>3)&(nu_0<3.2),2,'g','',               'g',true;
- @(FR_exc,FR_inh,nu_0,g) (0.8*FR_exc+0.2*FR_inh<10)&(g>0.1)&(g<0.11),  3,'\nu (spks/s/cell)','', '\nu',false;
- @(FR_exc,FR_inh,nu_0,g) (0.8*FR_exc+0.2*FR_inh<10)&(g>0.16)&(g<0.17), 4,'\nu (spks/s/cell)','', '\nu',false;
+ @(FR_exc,FR_inh,nu_0,g) (0.8*FR_exc+0.2*FR_inh<10)&(g>0.1)&(g<0.11),  3,'\nu (spk/s/cell)','', '\nu',false;
+ @(FR_exc,FR_inh,nu_0,g) (0.8*FR_exc+0.2*FR_inh<10)&(g>0.16)&(g<0.17), 4,'\nu (spk/s/cell)','', '\nu',false;
 };
 
-titles = {'\nu=1.5','\nu=3.17','g=0.1','g=0.16'};
+titles = {'\nu=1.5 spk/s/cell','\nu=3.17 spk/s/cell','g=0.1','g=0.16'};
 xlim_FR = {[0.07 0.2],[0.07 0.2],[1 5],[1 4]};
 ylim_FR = {[0.2 3],[2 25],[-2 24],[-2 24]};
 
@@ -91,7 +91,10 @@ for i = 1:size(conditions,1)
     xlabel(conditions{i,3}); ylabel(conditions{i,4});
     title(titles{i}); xlim(xlim_FR{i}); ylim(ylim_FR{i});
 end
-saveas(gcf,fullfile(save_dir,'panel_D.png'));
+
+%saveas(gcf,fullfile(save_dir,'panel_D.png'));
+file_path = fullfile(save_dir,'panel_D.svg');
+print(gcf, file_path, '-dsvg', '-painters');
 
 %% ========================================================================
 % Panel G — FR vs H and γ (regime-coded)
@@ -123,7 +126,11 @@ for i=1:numel(labels)
         'Marker',char('o'*(~regime(i))+'d'*regime(i)),'MarkerFaceAlpha',alphas(i));
 end
 xlabel('Firing Rate (Hz)'); ylabel('Norm. \gamma Pow. (a.u.)');
-saveas(gcf,fullfile(save_dir,'panel_G.png'));
+
+%saveas(gcf,fullfile(save_dir,'panel_G.png'));
+file_path = fullfile(save_dir,'panel_G.svg');
+print(gcf, file_path, '-dsvg', '-painters');
+
 
 %% ========================================================================
 % Panels E–F — H, γ vs g and ν correlations
@@ -135,7 +142,7 @@ getR = @(x,y) corr(x(:),y(:),'Type','Pearson','Rows','complete');
 % Subplot 1: H vs g
 subplot(1,4,1); hold on
 for i=1:numel(Hf)
-    scatter(Hf(i), g0(i), 8, [cmap(i),0,0], 'filled', 'MarkerFaceAlpha', alphas(i));
+    scatter(Hf(i), g0(i), 8, [cmap(i),0,0], 'filled','Marker',char('o'*(~regime(i))+'d'*regime(i)));
 end
 fit = polyfit(Hf, g0, 1);
 plot(sort(Hf), polyval(fit, sort(Hf)), 'k--', 'LineWidth', 1);
@@ -146,7 +153,7 @@ text(max(Hf)*0.6, max(g0)*0.4, sprintf('r=%.2f', r), 'FontSize', 8);
 % Subplot 2: H vs ν
 subplot(1,4,2); hold on
 for i=1:numel(Hf)
-    scatter(Hf(i), nu0(i), 8, [0,0,0], 'filled', 'MarkerFaceAlpha', alphas(i));
+    scatter(Hf(i), nu0(i), 8, [0,0,0], 'filled', 'MarkerFaceAlpha', alphas(i),'Marker',char('o'*(~regime(i))+'d'*regime(i)));
 end
 fit = polyfit(Hf, nu0, 1);
 plot(sort(Hf), polyval(fit, sort(Hf)), 'k--', 'LineWidth', 1);
@@ -157,26 +164,28 @@ text(max(Hf)*0.6, max(nu0)*0.4, sprintf('r=%.2f', r), 'FontSize', 8);
 % Subplot 3: γ vs g
 subplot(1,4,3); hold on
 for i=1:numel(gamf)
-    scatter(gamf(i), g0(i), 8, [cmap(i),0,0], 'filled', 'MarkerFaceAlpha', alphas(i));
+    scatter(gamf(i), g0(i), 8, [cmap(i),0,0], 'filled','Marker',char('o'*(~regime(i))+'d'*regime(i)));
 end
 fit = polyfit(gamf, g0, 1);
 plot(sort(gamf), polyval(fit, sort(gamf)), 'k--', 'LineWidth', 1);
 [r,p]=getR(gamf,g0); T.g_gamma=[r p];
-xlabel('\gamma'); ylabel('g');
+xlabel('Normalized \gamma pow. (a.u.)'); ylabel('g');
 text(max(gamf)*0.6, max(g0)*0.4, sprintf('r=%.2f', r), 'FontSize', 8);
 
 % Subplot 4: γ vs ν
 subplot(1,4,4); hold on
 for i=1:numel(gamf)
-    scatter(gamf(i), nu0(i), 8, [0,0,0], 'filled', 'MarkerFaceAlpha', alphas(i));
+    scatter(gamf(i), nu0(i), 8, [0,0,0], 'filled', 'MarkerFaceAlpha', alphas(i),'Marker',char('o'*(~regime(i))+'d'*regime(i)));
 end
 fit = polyfit(gamf, nu0, 1);
 plot(sort(gamf), polyval(fit, sort(gamf)), 'k--', 'LineWidth', 1);
 [r,p]=getR(gamf,nu0); T.nu_gamma=[r p];
-xlabel('\gamma'); ylabel('\nu');
+xlabel('Normalized \gamma pow. (a.u.)'); ylabel('\nu (spk/s/cell)');
 text(max(gamf)*0.6, max(nu0)*0.4, sprintf('r=%.2f', r), 'FontSize', 8);
 
-saveas(gcf, fullfile(save_dir,'panel_E-F.png'));
+%saveas(gcf, fullfile(save_dir,'panel_E-F.png'));
+file_path = fullfile(save_dir,'panel_E-F.svg');
+print(gcf, file_path, '-dsvg', '-painters');
 
 
 %% ========================================================================
@@ -191,7 +200,11 @@ imagesc(xq(1,:),yq(:,1),Z>0.5,'AlphaData',~isnan(Z));
 set(gca,'YDir','normal'); colormap(regimes); hold on
 contour(xq,yq,Z,[0.5 0.5],'k','LineWidth',3)
 xlabel('g'); ylabel('\nu'); title('Dynamical Regimes'); box off
-saveas(gcf,fullfile(save_dir,'panel_C.png'));
+
+%saveas(gcf,fullfile(save_dir,'panel_C.png'));
+file_path = fullfile(save_dir,'panel_C.svg');
+print(gcf, file_path, '-dsvg', '-painters');
+
 
 %% ========================================================================
 % Panels I–K — Cross-validated FR prediction
@@ -333,10 +346,11 @@ xticks(1:length(coef_mean))
 xticklabels({'H','\gamma'});
 box('off')
 ylabel('Coefficient'); set(gca,'FontSize',8)
-
+ylim([-2.1,1.1])
 save_path = fullfile(save_dir,'/panel_H-I.png');
-saveas(gcf, [save_path]); 
-
+%saveas(gcf, [save_path]); 
+file_path = fullfile(save_dir,'panel_H-I.svg');
+print(gcf, file_path, '-dsvg', '-painters');
 
 %% ========================================================================
 % Compute performance for other models

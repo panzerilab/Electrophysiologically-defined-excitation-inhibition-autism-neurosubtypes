@@ -222,7 +222,8 @@ g_unique = unique(g_all);
 nu_unique = unique(nu_all);
 id = str2double(ID);
 fmin = 20; 
-fmax = 100; 
+fmax = 100;
+nu0_vals = unique(nu0);
 
 for i = 1:min(2, numel(nu_unique))
 
@@ -263,9 +264,9 @@ end
 
 % Titles and legends
 subplot(1,2,1); 
-title(sprintf('\\nu = %.2f (spks/s/cell)',nu0_vals(1)));
+title(sprintf('\\nu = %.2f (spk/s/cell)',nu0_vals(1)));
 subplot(1,2,2); 
-title(sprintf('\\nu = %.2f (spks/s/cell)',nu0_vals(5)));
+title(sprintf('\\nu = %.2f (spk/s/cell)',nu0_vals(5)));
 
 legendEntries = {};
 for j = 1:min(3, numel(g_unique))
@@ -361,9 +362,9 @@ end
 
 % Titles and legends
 subplot(1,2,1); 
-title(sprintf('\\nu = %.2f (spks/s/cell)',nu0_vals(1)));
+title(sprintf('\\nu = %.2f (spk/s/cell)',nu0_vals(1)));
 subplot(1,2,2); 
-title(sprintf('\\nu = %.2f (spks/s/cell)',nu0_vals(5)));
+title(sprintf('\\nu = %.2f (spk/s/cell)',nu0_vals(5)));
 
 save_path = fullfile(save_dir,'/panel_A.svg');
 saveas(gcf, [save_path]); 
